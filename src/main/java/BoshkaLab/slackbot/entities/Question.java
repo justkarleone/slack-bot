@@ -1,6 +1,7 @@
 package BoshkaLab.slackbot.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,17 @@ public class Question {
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
-    private Set<Answer> answer;
+    private Set<Answer> answers;
+
+    public Question() {
+        answers = new HashSet<>();
+    }
+
+    public Question(String text, Integer interval) {
+        this.text = text;
+        this.interval = interval;
+        answers = new HashSet<>();
+    }
 
     public Long getId() {
         return id;
@@ -41,5 +52,15 @@ public class Question {
 
     public void setInterval(Integer interval) {
         this.interval = interval;
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+        for (Answer answer : answers)
+            answer.setQuestion(this);
     }
 }

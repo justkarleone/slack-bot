@@ -18,6 +18,19 @@ public class User {
     @JoinColumn(name="usertype_id", referencedColumnName = "id")
     private UserType type;
 
+    public User() {
+    }
+
+    public User(Long id, String login, String password, String email, String name, String surname, UserType type) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.type = type;
+    }
+
     public Long getId() {
         return id;
     }

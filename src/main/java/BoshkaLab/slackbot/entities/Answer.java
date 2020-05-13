@@ -21,6 +21,17 @@ public class Answer {
     @JoinColumn(name="question_id", referencedColumnName = "id")
     private Question question;
 
+    public Answer() {
+    }
+
+    public Answer(Long id, String answer, Date timeOfAnswer, Employee employee, Question question) {
+        this.id = id;
+        this.answer = answer;
+        this.timeOfAnswer = timeOfAnswer;
+        this.employee = employee;
+        this.question = question;
+    }
+
     public Long getId() {
         return id;
     }
@@ -43,5 +54,23 @@ public class Answer {
 
     public void setTimeOfAnswer(Date timeOfAnswer) {
         this.timeOfAnswer = timeOfAnswer;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+        employee.getAnswers().add(this);
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+        question.getAnswers().add(this);
     }
 }

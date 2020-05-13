@@ -2,6 +2,7 @@ package BoshkaLab.slackbot.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,18 @@ public class Employee {
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
-    private Set<Answer> answer;
+    private Set<Answer> answers;
+
+    public Employee() {
+        answers = new HashSet<>();
+    }
+
+    public Employee(String slackId, String fullName, Date timeOfEntering) {
+        this.slackId = slackId;
+        this.fullName = fullName;
+        this.timeOfEntering = timeOfEntering;
+        this.answers = new HashSet<>();
+    }
 
     public Integer getId() {
         return id;
@@ -54,5 +66,15 @@ public class Employee {
 
     public void setTimeOfEntering(Date timeOfEntering) {
         this.timeOfEntering = timeOfEntering;
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+        for (Answer answer : answers)
+            answer.setEmployee(this);
     }
 }
