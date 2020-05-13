@@ -1,10 +1,8 @@
 package BoshkaLab.slackbot.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Employee {
@@ -12,9 +10,19 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+//    @Column(name = "slack_id")
     private String slackId;
+//    @Column(name = "fullname")
     private String fullName;
+//    @Column(name = "time_of_entering")
     private Date timeOfEntering;
+
+    @OneToMany(
+            mappedBy = "employee",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<Answer> answer;
 
     public Integer getId() {
         return id;

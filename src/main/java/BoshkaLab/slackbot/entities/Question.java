@@ -1,9 +1,7 @@
 package BoshkaLab.slackbot.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Question {
@@ -13,6 +11,13 @@ public class Question {
 
     private String text;
     private Integer interval;
+
+    @OneToMany(
+            mappedBy = "question",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<Answer> answer;
 
     public Long getId() {
         return id;
