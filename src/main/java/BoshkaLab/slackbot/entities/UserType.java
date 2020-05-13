@@ -1,6 +1,7 @@
 package BoshkaLab.slackbot.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,15 @@ public class UserType {
     )
     private Set<User> users;
 
+    public UserType() {
+        users = new HashSet<>();
+    }
+
+    public UserType(String name) {
+        this.name = name;
+        users = new HashSet<>();
+    }
+
     public Long getId() {
         return id;
     }
@@ -34,5 +44,13 @@ public class UserType {
         this.name = name;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(Set<User> users) {
+        this.users = users;
+        for (User user : users)
+            user.setType(this);
+    }
 }

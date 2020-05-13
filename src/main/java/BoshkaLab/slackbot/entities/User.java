@@ -65,4 +65,13 @@ public class User {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+        type.getUsers().add(this);
+    }
 }
