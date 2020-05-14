@@ -13,7 +13,7 @@ public class UserType {
     private String name;
 
     @OneToMany(
-            mappedBy = "userType",
+            mappedBy = "type",
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )

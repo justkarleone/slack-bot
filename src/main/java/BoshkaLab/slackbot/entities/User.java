@@ -3,6 +3,7 @@ package BoshkaLab.slackbot.entities;
 import javax.persistence.*;
 
 @Entity
+@Table(name="_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
