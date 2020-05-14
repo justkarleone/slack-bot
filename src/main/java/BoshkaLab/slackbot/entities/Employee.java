@@ -25,15 +25,24 @@ public class Employee {
     )
     private Set<Answer> answers;
 
+    @OneToMany(
+            mappedBy = "employee",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<SendingTimetable> timetable;
+
     public Employee() {
         answers = new HashSet<>();
+        timetable = new HashSet<>();
     }
 
     public Employee(String slackId, String fullName, Date timeOfEntering) {
         this.slackId = slackId;
         this.fullName = fullName;
         this.timeOfEntering = timeOfEntering;
-        this.answers = new HashSet<>();
+        answers = new HashSet<>();
+        timetable = new HashSet<>();
     }
 
     public Integer getId() {
@@ -76,5 +85,15 @@ public class Employee {
         this.answers = answers;
         for (Answer answer : answers)
             answer.setEmployee(this);
+    }
+
+    public Set<SendingTimetable> getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(Set<SendingTimetable> timetable) {
+        this.timetable = timetable;
+        for (SendingTimetable record : timetable)
+            record.setEmployee(this);
     }
 }

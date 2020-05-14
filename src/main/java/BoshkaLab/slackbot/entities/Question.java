@@ -20,14 +20,23 @@ public class Question {
     )
     private Set<Answer> answers;
 
+    @OneToMany(
+            mappedBy = "question",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<SendingTimetable> timetable;
+
     public Question() {
         answers = new HashSet<>();
+        timetable = new HashSet<>();
     }
 
     public Question(String text, Integer interval) {
         this.text = text;
         this.interval = interval;
         answers = new HashSet<>();
+        timetable = new HashSet<>();
     }
 
     public Long getId() {
@@ -62,5 +71,15 @@ public class Question {
         this.answers = answers;
         for (Answer answer : answers)
             answer.setQuestion(this);
+    }
+
+    public Set<SendingTimetable> getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(Set<SendingTimetable> timetable) {
+        this.timetable = timetable;
+        for (SendingTimetable record : timetable)
+            record.setQuestion(this);
     }
 }
