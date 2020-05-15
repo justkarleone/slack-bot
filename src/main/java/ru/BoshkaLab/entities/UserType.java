@@ -1,4 +1,4 @@
-package BoshkaLab.slackbot.entities;
+package ru.BoshkaLab.entities;
 
 import javax.persistence.*;
 import java.util.HashSet;
