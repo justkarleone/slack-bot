@@ -21,8 +21,7 @@ public class SendingTimetable {
     public SendingTimetable() {
     }
 
-    public SendingTimetable(Long id, Date time, Employee employee, Question question) {
-        this.id = id;
+    public SendingTimetable(Date time, Employee employee, Question question) {
         this.time = time;
         this.employee = employee;
         this.question = question;

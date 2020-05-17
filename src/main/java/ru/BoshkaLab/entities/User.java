@@ -22,8 +22,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String login, String password, String email, String name, String surname, UserType type) {
-        this.id = id;
+    public User(String login, String password, String email, String name, String surname, UserType type) {
         this.login = login;
         this.password = password;
         this.email = email;
