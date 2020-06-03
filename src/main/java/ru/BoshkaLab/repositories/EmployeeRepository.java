@@ -3,6 +3,10 @@ package ru.BoshkaLab.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.BoshkaLab.entities.Employee;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    Employee findBySlackId(String slack_id);
+import java.util.Date;
+import java.util.List;
+
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+    boolean existsBySlackId(String slackId);
+    List<Employee> findAllByTimeOfEnding(Date time);
 }

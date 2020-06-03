@@ -3,9 +3,16 @@ package ru.BoshkaLab.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.BoshkaLab.entities.Employee;
+import ru.BoshkaLab.entities.Question;
+import ru.BoshkaLab.entities.SendingTimetable;
 import ru.BoshkaLab.repositories.AnswerRepository;
 import ru.BoshkaLab.repositories.EmployeeRepository;
 import ru.BoshkaLab.repositories.QuestionRepository;
+import ru.BoshkaLab.repositories.SendingTimetableRepository;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -15,6 +22,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private AnswerRepository answerRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private SendingTimetableRepository timetableRepository;
 
     @Override
     public double getProgress(long employeeId) {
@@ -24,7 +33,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void add(Employee employee) {
+    public void add(String slackId, String fullName) {
+        Date currentTime = new Date(System.currentTimeMillis());
+        Employee employee = new Employee(slackId, fullName, currentTime, null);
         employeeRepository.saveAndFlush(employee);
+
+        List<Question> questionList = questionRepository.findAll();
+        for (var question : questionList) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentTime);
+            calendar.add(Calendar.MINUTE, question.getInterval());
+            Date time = calendar.getTime();
+
+            SendingTimetable newRecord = new SendingTimetable(time, employee, question, false);
+            timetableRepository.saveAndFlush(newRecord);
+        }
     }
 }
