@@ -11,39 +11,19 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-//    @Column(name = "slack_id")
     private String slackId;
-//    @Column(name = "fullname")
     private String fullName;
-//    @Column(name = "time_of_entering")
     private Date timeOfEntering;
-
-    @OneToMany(
-            mappedBy = "employee",
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.LAZY
-    )
-    private Set<Answer> answers;
-
-    @OneToMany(
-            mappedBy = "employee",
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.LAZY
-    )
-    private Set<SendingTimetable> timetable;
+    private Date timeOfEnding;
 
     public Employee() {
-        answers = new HashSet<>();
-        timetable = new HashSet<>();
     }
 
-    public Employee(String slackId, String fullName, Date timeOfEntering) {
+    public Employee(String slackId, String fullName, Date timeOfEntering, Date timeOfEnding) {
         this.slackId = slackId;
         this.fullName = fullName;
         this.timeOfEntering = timeOfEntering;
-        answers = new HashSet<>();
-        timetable = new HashSet<>();
+        this.timeOfEnding = timeOfEnding;
     }
 
     public Integer getId() {
@@ -78,23 +58,11 @@ public class Employee {
         this.timeOfEntering = timeOfEntering;
     }
 
-    public Set<Answer> getAnswers() {
-        return answers;
+    public Date getTimeOfEnding() {
+        return timeOfEnding;
     }
 
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
-        for (Answer answer : answers)
-            answer.setEmployee(this);
-    }
-
-    public Set<SendingTimetable> getTimetable() {
-        return timetable;
-    }
-
-    public void setTimetable(Set<SendingTimetable> timetable) {
-        this.timetable = timetable;
-        for (SendingTimetable record : timetable)
-            record.setEmployee(this);
+    public void setTimeOfEnding(Date timeOfEnding) {
+        this.timeOfEnding = timeOfEnding;
     }
 }

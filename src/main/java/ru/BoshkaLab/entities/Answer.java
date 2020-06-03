@@ -8,9 +8,7 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String answer;
-//    @Column(name = "time_of_answer")
     private Date timeOfAnswer;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,7 +59,6 @@ public class Answer {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-        employee.getAnswers().add(this);
     }
 
     public Question getQuestion() {
@@ -70,6 +67,5 @@ public class Answer {
 
     public void setQuestion(Question question) {
         this.question = question;
-        question.getAnswers().add(this);
     }
 }

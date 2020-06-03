@@ -9,6 +9,7 @@ public class SendingTimetable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date time;
+    private boolean posted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="employee_id", referencedColumnName = "id")
@@ -21,10 +22,11 @@ public class SendingTimetable {
     public SendingTimetable() {
     }
 
-    public SendingTimetable(Date time, Employee employee, Question question) {
+    public SendingTimetable(Date time, Employee employee, Question question, boolean posted) {
         this.time = time;
         this.employee = employee;
         this.question = question;
+        this.posted = posted;
     }
 
     public Long getId() {
@@ -47,9 +49,16 @@ public class SendingTimetable {
         return employee;
     }
 
+    public boolean isPosted() {
+        return posted;
+    }
+
+    public void setPosted(boolean posted) {
+        this.posted = posted;
+    }
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
-        employee.getTimetable().add(this);
     }
 
     public Question getQuestion() {
@@ -58,6 +67,5 @@ public class SendingTimetable {
 
     public void setQuestion(Question question) {
         this.question = question;
-        question.getTimetable().add(this);
     }
 }
