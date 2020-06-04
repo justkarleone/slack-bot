@@ -26,16 +26,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     private SendingTimetableRepository timetableRepository;
 
     @Override
-    public double getProgress(long employeeId) {
+    public double getProgress(int employeeId) {
         long questionCount = questionRepository.count();
         double answeredQuestion = answerRepository.countAllByEmployee_Id(employeeId);
         return answeredQuestion / questionCount;
     }
 
     @Override
-    public void add(String slackId, String fullName) {
+    public void add(String slackId, String name, String surname) {
         Date currentTime = new Date(System.currentTimeMillis());
-        Employee employee = new Employee(slackId, fullName, currentTime, null);
+        Employee employee = new Employee(slackId, name, surname, currentTime, null);
         employeeRepository.saveAndFlush(employee);
 
         List<Question> questionList = questionRepository.findAll();

@@ -1,47 +1,74 @@
 package ru.BoshkaLab.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.BoshkaLab.entities.Question;
 import ru.BoshkaLab.repositories.QuestionRepository;
+import ru.BoshkaLab.services.QuestionServiceImpl;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
-@RestController
+@Controller
 @RequestMapping("question")
 public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private QuestionServiceImpl questionService;
 
-    @GetMapping("all")
-    public Iterable<Question> getAll() {
-        return questionRepository.findAll();
+//    @GetMapping("all")
+//    public Iterable<Question> getAll() {
+//        return questionRepository.findAll();
+//    }
+//
+//    @GetMapping("/{id}")
+//    public Question getOne(@PathVariable long id) {
+//        return questionRepository.getOne(id);
+//    }
+//
+//    @PostMapping("/add")
+//    public void add(@RequestBody Map<String, String> newQuestion) {
+//        try {
+//            String text = newQuestion.get("text");
+//            Integer interval = Integer.parseInt(newQuestion.get("interval"));
+//            questionService.add(text, interval);
+//        }
+//        catch (Exception e) {
+//            return;
+//        }
+//    }
+//
+//    @PutMapping("/update")
+//    public Question update(@RequestBody Question question) {
+//        questionRepository.saveAndFlush(question);
+//        return question;
+//    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String questionList(ModelMap modelMap){
+        modelMap.put("question" ,questionRepository.findAll());
+        return "question/questions";
     }
 
     @GetMapping("/{id}")
-    public Question getOne(@PathVariable long id) {
-        return questionRepository.getOne(id);
+    public String delete(@PathVariable(value = "id") long id, Model model){
+        Question question = questionRepository.findById(id).orElseThrow(IllegalStateException::new);
+        questionRepository.delete(question);
+        return "redirect: ";
     }
 
-    @PostMapping("/add")
-    public Question add(@RequestBody Map<String, String> newQuestion) {
-        if (!newQuestion.containsKey("text") ||
-                !newQuestion.containsKey("interval"))
-            return null;
-
-        String text = newQuestion.get("text");
-        Integer interval = Integer.parseInt(newQuestion.get("interval"));
-
-        Question question = new Question(text, interval);
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public String questionAdd(HttpServletRequest request){
+        Question question = new Question();
+        question.setInterval(Integer.parseInt(request.getParameter("day").trim()));
+        question.setText(request.getParameter("text").trim());
         questionRepository.saveAndFlush(question);
-
-        return question;
-    }
-
-    @PutMapping("/update")
-    public Question update(@RequestBody Question question) {
-        questionRepository.saveAndFlush(question);
-        return question;
+        return "redirect: ";
     }
 }

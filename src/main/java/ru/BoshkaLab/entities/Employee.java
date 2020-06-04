@@ -2,8 +2,6 @@ package ru.BoshkaLab.entities;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name="employee")
@@ -12,16 +10,18 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String slackId;
-    private String fullName;
+    private String name;
+    private String surname;
     private Date timeOfEntering;
     private Date timeOfEnding;
 
     public Employee() {
     }
 
-    public Employee(String slackId, String fullName, Date timeOfEntering, Date timeOfEnding) {
+    public Employee(String slackId, String name, String surname, Date timeOfEntering, Date timeOfEnding) {
         this.slackId = slackId;
-        this.fullName = fullName;
+        this.name = name;
+        this.surname = surname;
         this.timeOfEntering = timeOfEntering;
         this.timeOfEnding = timeOfEnding;
     }
@@ -42,12 +42,20 @@ public class Employee {
         this.slackId = slackId;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public Date getTimeOfEntering() {

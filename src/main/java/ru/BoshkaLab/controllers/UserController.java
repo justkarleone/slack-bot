@@ -17,36 +17,39 @@ public class UserController {
     @Autowired
     private UserTypeRepository userTypeRepository;
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public Iterable<User> getAll() {
         return userRepository.findAll();
     }
 
-    @PostMapping("add")
-    public User add(@RequestBody Map<String, String> newUser) {
-        if (!newUser.containsKey("login") ||
-                !newUser.containsKey("email") ||
-                !newUser.containsKey("password") ||
-                !newUser.containsKey("name") ||
-                !newUser.containsKey("surname") ||
-                !newUser.containsKey("type_id"))
-            return null;
+    @PostMapping("/add")
+    public void add(@RequestBody Map<String, String> newUser) {
+        String login;
+        String email;
+        String password;
+        String name;
+        String surname;
+        long typeId;
 
-        String login = newUser.get("login");
-        String email = newUser.get("email");
-        String password = newUser.get("password");
-        String name = newUser.get("name");
-        String surname = newUser.get("surname");
-        long type_id = Long.parseLong(newUser.get("type_id"));
+        try {
+            login = newUser.get("login");
+            email = newUser.get("email");
+            password = newUser.get("password");
+            name = newUser.get("name");
+            surname = newUser.get("surname");
+            typeId = Long.parseLong(newUser.get("type_id"));
+        }
+        catch (Exception e) {
+            return;
+        }
 
-        UserType type = userTypeRepository.getOne(type_id);
+        UserType type = userTypeRepository.getOne(typeId);
 
         User user = new User(login, password, email, name, surname, type);
-
-        return user;
+        userRepository.saveAndFlush(user);
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public User delete(@RequestBody Map<String, String> userToDelete) {
         if (!userToDelete.containsKey("user_id"))
             return null;
@@ -57,7 +60,7 @@ public class UserController {
         return user;
     }
 
-    @GetMapping("auth")
+    @GetMapping("/auth")
     public String authenticate(@RequestBody Map<String, String> auth) {
         if (!auth.containsKey("email")
                 || !auth.containsKey("password"))

@@ -14,7 +14,7 @@ public class AnswerController {
     @Autowired
     private AnswerRepository answerRepository;
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public Iterable<Answer> getAll() {
         return answerRepository.findAll();
     }
