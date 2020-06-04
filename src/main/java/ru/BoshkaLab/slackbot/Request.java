@@ -61,18 +61,28 @@ public class Request {
         Map<String, String> params = new HashMap<>() {{
             put("token", token);
         }};
-        String answer = request(RequestType.GET, url, params);
 
-        return answer;
+        return request(RequestType.GET, url, params);
     }
 
-    public static void postMessage(String message, String userId) throws IOException {
+    public static String postMessage(String message, String userId) throws IOException {
         String url = "https://slack.com/api/chat.postMessage";
         Map<String, String> params = new HashMap<>() {{
             put("token", token);
             put("channel", userId);
             put("text", message);
         }};
-        request(RequestType.POST, url, params);
+
+        return request(RequestType.POST, url, params);
+    }
+
+    public static String getAnswer(String channel) throws IOException {
+        String url = "https://slack.com/api/conversations.history";
+        Map<String, String> params = new HashMap<>() {{
+            put("token", token);
+            put("channel", channel);
+        }};
+
+        return request(RequestType.GET, url, params);
     }
 }

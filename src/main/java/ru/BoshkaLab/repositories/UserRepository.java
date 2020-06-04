@@ -5,4 +5,5 @@ import ru.BoshkaLab.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmailAndPassword(String email, String password);
+    boolean existsByLogin(String login);
 }

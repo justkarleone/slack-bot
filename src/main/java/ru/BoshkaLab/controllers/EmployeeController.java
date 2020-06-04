@@ -56,7 +56,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public String employeeList(@PathVariable(value = "id") int id, ModelMap modelMap){
-        modelMap.put("employee", employeeRepository.getOne(id));
+        modelMap.put("employee", employeeRepository.findById(id));
         return "employee/employeeSingle";
     }
 

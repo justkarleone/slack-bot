@@ -43,7 +43,7 @@
     </div>
     <div class="enter-auth">
         <span class="enter">Вход в систему</span>
-        <form action="" method="post">
+        <form action="/employee" method="get">
             <div class="login">
                 <span>Логин</span>
                 <input type="text" placeholder="Введите логин" required>
