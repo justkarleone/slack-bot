@@ -24,8 +24,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void add(String text, Integer interval) {
-        Question newQuestion = new Question(text, interval);
-        questionRepository.saveAndFlush(newQuestion);
+        Question question = new Question(text, interval);
+        questionRepository.saveAndFlush(question);
 
         List<Employee> employeeList = employeeRepository.findAllByTimeOfEnding(null);
         for (var employee : employeeList) {
@@ -34,7 +34,9 @@ public class QuestionServiceImpl implements QuestionService {
             calendar.add(Calendar.MINUTE, interval);
             Date time = calendar.getTime();
 
-            SendingTimetable newRecord = new SendingTimetable(time, employee, newQuestion, false);
+            Question thisQuestion = questionRepository.findByText(text);
+
+            SendingTimetable newRecord = new SendingTimetable(time, employee, thisQuestion, false);
             timetableRepository.saveAndFlush(newRecord);
         }
     }

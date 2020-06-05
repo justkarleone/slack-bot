@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     boolean existsBySlackId(String slackId);
+    Employee findBySlackId(String slackId);
     List<Employee> findAllByTimeOfEnding(Date time);
 }

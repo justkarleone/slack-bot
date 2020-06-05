@@ -45,7 +45,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             calendar.add(Calendar.MINUTE, question.getInterval());
             Date time = calendar.getTime();
 
-            SendingTimetable newRecord = new SendingTimetable(time, employee, question, false);
+            Employee thisEmployee = employeeRepository.findBySlackId(slackId);
+
+            SendingTimetable newRecord = new SendingTimetable(time, thisEmployee, question, false);
             timetableRepository.saveAndFlush(newRecord);
         }
     }
