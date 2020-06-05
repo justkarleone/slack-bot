@@ -18,7 +18,7 @@ public class InitSetup {
 
     @EventListener(ContextRefreshedEvent.class)
     public void initialSetup() {
-        String[] roles = { "", "", "" };
+        String[] roles = { "ADMIN", "HR", "OBSERVER" };
 
         for (var role : roles) {
             if (userTypeRepository.existsByName(role))
@@ -29,7 +29,7 @@ public class InitSetup {
         }
 
         if (!userRepository.existsByLogin("admin")) {
-            UserType userType = userTypeRepository.findByName("");
+            UserType userType = userTypeRepository.findByName("ADMIN");
             User user = new User("admin", "admin", "admin@pochta.net",
                                  "Anton", "Lisov", userType);
             userRepository.saveAndFlush(user);
