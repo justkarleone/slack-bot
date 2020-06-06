@@ -1,10 +1,13 @@
 package ru.BoshkaLab.entities;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name="employee")
+@Proxy(lazy = false)
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

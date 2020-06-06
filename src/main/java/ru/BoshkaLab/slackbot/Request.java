@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Request {
-    private static final String token = "xoxb-977456197875-1001188814789-tZQ2LkfkUhJx4elbRVpAra9N";
+    private static final String token = "xoxb-977456197875-1001188814789-eeROO5p84xqRH9LEZlXveRLL";
 
     enum RequestType {
         GET,

@@ -1,11 +1,12 @@
 package ru.BoshkaLab.entities;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name="question")
+@Proxy(lazy = false)
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
