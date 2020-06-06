@@ -65,10 +65,9 @@ public class QuestionController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String questionAdd(HttpServletRequest request){
-        Question question = new Question();
-        question.setInterval(Integer.parseInt(request.getParameter("day").trim()));
-        question.setText(request.getParameter("text").trim());
-        questionRepository.saveAndFlush(question);
+        int interval = Integer.parseInt(request.getParameter("day").trim());
+        String text = request.getParameter("text").trim();
+        questionService.add(text, interval);
         return "redirect: ";
     }
 }
