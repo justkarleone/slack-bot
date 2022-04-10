@@ -7,11 +7,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Request {
     private static final String token = "xoxb-977456197875-1001188814789-eeROO5p84xqRH9LEZlXveRLL";
+    private static final String postMessageUrl = "https://slack.com/api/chat.postMessage";
+    private static final String getAnswerUrl = "https://slack.com/api/conversations.history";
+    private static final String getUsersUrl = "https://slack.com/api/users.list";
 
     enum RequestType {
         GET,
@@ -47,9 +51,9 @@ public class Request {
         StringBuilder result = new StringBuilder();
 
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
             result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            result.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
             result.append("&");
         }
 
@@ -57,32 +61,29 @@ public class Request {
     }
 
     public static String getUsers() throws IOException {
-        String url = "https://slack.com/api/users.list";
         Map<String, String> params = new HashMap<>() {{
             put("token", token);
         }};
 
-        return request(RequestType.GET, url, params);
+        return request(RequestType.GET, getUsersUrl, params);
     }
 
     public static String postMessage(String message, String userId) throws IOException {
-        String url = "https://slack.com/api/chat.postMessage";
         Map<String, String> params = new HashMap<>() {{
             put("token", token);
             put("channel", userId);
             put("text", message);
         }};
 
-        return request(RequestType.POST, url, params);
+        return request(RequestType.POST, postMessageUrl, params);
     }
 
     public static String getAnswer(String channel) throws IOException {
-        String url = "https://slack.com/api/conversations.history";
         Map<String, String> params = new HashMap<>() {{
             put("token", token);
             put("channel", channel);
         }};
 
-        return request(RequestType.GET, url, params);
+        return request(RequestType.GET, getAnswerUrl, params);
     }
 }

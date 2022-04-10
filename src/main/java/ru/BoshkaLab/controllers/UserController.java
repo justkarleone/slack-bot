@@ -55,15 +55,13 @@ public class UserController {
             return null;
 
         long user_id = Long.parseLong(userToDelete.get("user_id"));
-        User user = userRepository.getOne(user_id);
 
-        return user;
+        return userRepository.getOne(user_id);
     }
 
     @GetMapping("/auth")
     public String authenticate(@RequestBody Map<String, String> auth) {
-        if (!auth.containsKey("email")
-                || !auth.containsKey("password"))
+        if (!auth.containsKey("email") || !auth.containsKey("password"))
             return null;
         String email = auth.get("email");
         String password = auth.get("password");

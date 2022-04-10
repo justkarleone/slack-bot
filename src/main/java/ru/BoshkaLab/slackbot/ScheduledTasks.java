@@ -1,6 +1,5 @@
 package ru.BoshkaLab.slackbot;
 
-import org.hibernate.annotations.Proxy;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +104,6 @@ public class ScheduledTasks {
             Answer answer = new Answer(answerText, currentTime, employee, record.getQuestion());
             answerRepository.saveAndFlush(answer);
         }
-        System.out.println("It's working");
     }
 
     private String parseAnswer(String answer, String question) {
